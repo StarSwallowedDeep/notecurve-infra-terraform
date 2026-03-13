@@ -24,14 +24,16 @@ resource "aws_instance" "ec2" {
   user_data = var.user_data
   key_name = var.key_name
 
+  # 워크스페이스 dev, staging, prod
   tags = merge(tomap({
-    Name = "aws-ec2-${var.stage}-${var.servicename}"}),
+    Name = "aws-ec2-${terraform.workspace}-${var.servicename}"}),
     var.tags)
 }
 
 # 보안그룹 생성
 resource "aws_security_group" "sg-ec2-comm" {
-  name   = "aws-sg-${var.stage}-${var.servicename}-ec2"
+  # 워크스페이스 dev, staging, prod
+  name   = "aws-sg-${terraform.workspace}-${var.servicename}-ec2"
   vpc_id = local.vpc_id
 
   ingress {
@@ -49,7 +51,8 @@ resource "aws_security_group" "sg-ec2-comm" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # 워크스페이스 dev, staging, prod
   tags = merge(tomap({
-    Name = "aws-sg-${var.stage}-${var.servicename}-ec2"}),
+    Name = "aws-sg-${terraform.workspace}-${var.servicename}-ec2"}),
     var.tags)
 }
