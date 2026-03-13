@@ -1,7 +1,7 @@
-variable "stage" {
-  type    = string
-  default = "dev"
-}
+# variable "stage" {
+#   type    = string
+#   default = "dev"
+# }
 
 variable "servicename" {
   type    = string
